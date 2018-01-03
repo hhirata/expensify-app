@@ -18,9 +18,9 @@ const store = configureStore()
 //     console.log(getVisibleItems(expenses,filters))
 // })
 
-store.dispatch(addExpense({description:'Water bill','amount':565}))
-store.dispatch(addExpense({description:'Gas bill',createdAt: 456}))
-store.dispatch(addExpense({description:'rent','amount':109500}))
+// store.dispatch(addExpense({description:'Water bill','amount':565}))
+// store.dispatch(addExpense({description:'Gas bill',createdAt: 456}))
+// store.dispatch(addExpense({description:'rent','amount':109500}))
 
 // store.dispatch(setTextFilter('bill'))
 
