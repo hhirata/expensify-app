@@ -12,7 +12,6 @@ import './styles/styles.scss'
 import 'react-dates/lib/css/_datepicker.css'
 
 const store = configureStore()
-
 // store.subscribe(()=>{
 //     const { expenses, filters } = store.getState()
 //     console.log(getVisibleItems(expenses,filters))
