@@ -41,3 +41,27 @@ export const editExpense = (id,update) => (
         update
     }
 )
+
+export const setExpenses = (expenses) => (
+    {
+        type:'SET_EXPENSES',
+        expenses
+    }
+)
+
+export const startSetExpenses = () =>{
+    return (dispatch) => {
+        return database.ref('expenses').once('value')
+                .then((snapshot) => {
+                    const expensesFromFirebase =[]
+                    snapshot.forEach(( childrenSnapshot) => {
+                        expensesFromFirebase.push({
+                            id:childrenSnapshot.key,
+                            ...childrenSnapshot.val()
+                        })
+                    })
+                   dispatch(setExpenses(expensesFromFirebase))
+                })
+                .catch((e)=>{})
+    }
+}
