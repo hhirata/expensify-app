@@ -1,5 +1,6 @@
 import * as firebase from 'firebase'
 import expenses from '../tests/fixtures/expenses'
+
 const config = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -13,7 +14,9 @@ firebase.initializeApp(config)
 
 const database = firebase.database()
 
-export {firebase, database as default}
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
+
+export {firebase, database as default, googleAuthProvider}
 // //child_removed
 // database.ref('expenses').on('child_removed',(snapshot)=>{
 //     console.log(snapshot.key, snapshot.val())
