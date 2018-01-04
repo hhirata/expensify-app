@@ -7,7 +7,8 @@ export const addExpense = (expense) => ({
 })
 
 export const startAddExpense = (expenseData = {}) =>{
-    return (dispatch) => {
+    return (dispatch,getState) => {
+        const uid = getState().auth.uid
         const {
             description = '',
             note= '',
@@ -15,7 +16,7 @@ export const startAddExpense = (expenseData = {}) =>{
             createdAt = 0
         } = expenseData
         const expense = { description, note , amount, createdAt}
-        return database.ref('expenses').push( expense )
+        return database.ref(`users/${uid}/expenses`).push( expense )
         .then((ref)=>{
             dispatch(addExpense({
                 id:ref.key,
@@ -50,8 +51,9 @@ export const setExpenses = (expenses) => (
 )
 
 export const startSetExpenses = () =>{
-    return (dispatch) => {
-        return database.ref('expenses').once('value')
+    return (dispatch,getState) => {
+        const uid = getState().auth.uid
+        return database.ref(`users/${uid}/expenses`).once('value')
                 .then((snapshot) => {
                     const expensesFromFirebase =[]
                     snapshot.forEach(( childrenSnapshot) => {
@@ -68,8 +70,9 @@ export const startSetExpenses = () =>{
 
 
 export const startRemoveExpense = ( {id} ) => {
-    return (dispatch) => {
-        return database.ref(`expenses/${id}`).remove()
+    return (dispatch,getState) => {
+        const uid = getState().auth.uid
+        return database.ref(`users/${uid}/expenses/${id}`).remove()
         .then(()=>{
             dispatch(removeExpense({ id }))
         })
@@ -77,8 +80,9 @@ export const startRemoveExpense = ( {id} ) => {
 }
 
 export const startEditExpense = (id,update) => {
-    return (dispatch) => {
-        return database.ref(`expenses/${id}`).update(update)
+    return (dispatch,getState) => {
+        const uid = getState().auth.uid
+        return database.ref(`users/${uid}/expenses/${id}`).update(update)
                 .then(()=>{
                     dispatch(editExpense(id,update))
                 })
